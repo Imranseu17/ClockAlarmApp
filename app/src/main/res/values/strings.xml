@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AlarmClockAPP</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_add_remainder">AddRemainderActivity</string>
+    <string name="action_discard_remainder">Discard Remainder</string>
+    <string name="action_save_remainder">Saved Remainder</string>
+</resources>
