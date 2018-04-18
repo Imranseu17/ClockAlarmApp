@@ -56,12 +56,28 @@ public class AlarmCursorAdapter extends CursorAdapter {
         String repeatType = data.getString(repeatTypeColumnIndex);
         String active = data.getString(activeColumnIndex);
 
-        String dateTime = date + " "+time;
-
         setRemainderTitle(title);
-        setRemainderDateTime(dateTime);
-        setRemainderRepeatInfo(repeat,repeatNo,repeatType);
-        setActivateImage(active);
+        if(data != null){
+            String dateTime = date + " "+time;
+            setRemainderDateTime(dateTime);
+        }
+
+        else {
+            mDateAndTimeText.setText("Date not set");
+        }
+
+        if(repeat != null){
+            setRemainderRepeatInfo(repeat,repeatNo,repeatType);
+        }else {
+            mRepeatInfoText.setText("Repeat Not Set");
+        }
+
+        if(active != null){
+            setActivateImage(active);
+        }else {
+            mActiveImage.setImageResource(R.drawable.ic_notifications_off_black_24px);
+        }
+
 
     }
 

@@ -21,13 +21,13 @@ public class AlarmRemainderDBHelper extends SQLiteOpenHelper{
 
         String SQL_CREATE_ALARM_TABLE = "CREATE TABLE " + AlarmRemainderContract.AlarmRemainderEntry.
                 TBLE_NAME + " (" + AlarmRemainderContract.AlarmRemainderEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                +AlarmRemainderContract.AlarmRemainderEntry.KEY_TITLE + " TEXT NOT NULL,"
-                +AlarmRemainderContract.AlarmRemainderEntry.KEY_DATE + " TEXT NOT NULL,"
-                +AlarmRemainderContract.AlarmRemainderEntry.KEY_TIME + " TEXT NOT NULL,"
-                +AlarmRemainderContract.AlarmRemainderEntry.KEY_REPEAT + " TEXT NOT NULL,"
-                +AlarmRemainderContract.AlarmRemainderEntry.KEY_REPEAT_NO + " TEXT NOT NULL,"
-                +AlarmRemainderContract.AlarmRemainderEntry.KEY_REPEAT_TYPE + " TEXT NOT NULL,"
-                +AlarmRemainderContract.AlarmRemainderEntry.KEY_ACTIVE + " TEXT NOT NULL," + " );";
+                + AlarmRemainderContract.AlarmRemainderEntry.KEY_TITLE + " TEXT NOT NULL,"
+                + AlarmRemainderContract.AlarmRemainderEntry.KEY_DATE + " TEXT NOT NULL,"
+                + AlarmRemainderContract.AlarmRemainderEntry.KEY_TIME + " TEXT NOT NULL,"
+                + AlarmRemainderContract.AlarmRemainderEntry.KEY_REPEAT + " TEXT NOT NULL,"
+                + AlarmRemainderContract.AlarmRemainderEntry.KEY_REPEAT_NO + " TEXT NOT NULL,"
+                + AlarmRemainderContract.AlarmRemainderEntry.KEY_REPEAT_TYPE + " TEXT NOT NULL,"
+                + AlarmRemainderContract.AlarmRemainderEntry.KEY_ACTIVE + " TEXT NOT NULL);" ;
 
         db.execSQL(SQL_CREATE_ALARM_TABLE);
 

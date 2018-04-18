@@ -4,4 +4,5 @@
     <string name="title_activity_add_remainder">AddRemainderActivity</string>
     <string name="action_discard_remainder">Discard Remainder</string>
     <string name="action_save_remainder">Saved Remainder</string>
+    <string name="title_activity_alarm_remainder">AlarmRemainderActivity</string>
 </resources>

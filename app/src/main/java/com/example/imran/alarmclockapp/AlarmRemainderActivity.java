@@ -10,12 +10,10 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
@@ -30,17 +28,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imran.alarmclockapp.data.AlarmRemainderContract;
+import com.example.imran.alarmclockapp.remainder.AlarmSeheduler;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
-public class AddRemainderActivity extends AppCompatActivity  implements
+public class AlarmRemainderActivity extends AppCompatActivity implements
         TimePickerDialog.OnTimeSetListener,
-        DatePickerDialog.OnDateSetListener,LoaderManager.LoaderCallbacks<Cursor> {
+        DatePickerDialog.OnDateSetListener,LoaderManager.LoaderCallbacks<Cursor>{
     private static final int EXISTING_VEHICLE_LOADER = 0;
-
     private Toolbar toolbar;
     private EditText titleEdittext;
     private TextView mDateText, mTimeText, mRepeatText, mRepeatNoText, mRepeatTypeText;
@@ -88,7 +86,7 @@ public class AddRemainderActivity extends AppCompatActivity  implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_remainder);
+        setContentView(R.layout.activity_alarm_remainder);
         Intent intent = getIntent();
         mCurrentRemainderUri = intent.getData();
 
@@ -101,7 +99,6 @@ public class AddRemainderActivity extends AppCompatActivity  implements
             setTitle("Edit Remainder");
 
             getLoaderManager().initLoader(EXISTING_VEHICLE_LOADER, null, this);
-
         }
 
         toolbar = findViewById(R.id.toolbar);
@@ -201,9 +198,7 @@ public class AddRemainderActivity extends AppCompatActivity  implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
     }
-
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState);
@@ -215,39 +210,8 @@ public class AddRemainderActivity extends AppCompatActivity  implements
         outState.putCharSequence(KEY_REPEAT_TYPE, mRepeatTypeText.getText());
         outState.putCharSequence(KEY_ACTIVE, mActive);
     }
-
-    public void setTime(View v) {
-
-        Calendar now = Calendar.getInstance();
-        com.wdullaer.materialdatetimepicker.time.TimePickerDialog timePickerDialog =
-                com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(
-                        this,
-                        now.get(Calendar.HOUR_OF_DAY),
-                        now.get(Calendar.MINUTE), false);
-
-        timePickerDialog.setThemeDark(false);
-        timePickerDialog.show(getFragmentManager(), "TimePickerDialog");
-    }
-
-    public void setDate(View view) {
-
-        Calendar now = Calendar.getInstance();
-        com.wdullaer.materialdatetimepicker.date.DatePickerDialog datePickerDialog = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.
-                newInstance(
-                        this,
-                        now.get(Calendar.YEAR),
-                        now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH));
-
-
-        datePickerDialog.show(getFragmentManager(), "DatePickerDialog");
-    }
-
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
-
         String [] projection = {
                 AlarmRemainderContract.AlarmRemainderEntry._ID,
                 AlarmRemainderContract.AlarmRemainderEntry.KEY_TITLE,
@@ -262,7 +226,6 @@ public class AddRemainderActivity extends AppCompatActivity  implements
         };
         return new CursorLoader(this, AlarmRemainderContract.AlarmRemainderEntry.CONTENT_URI,
                 projection,null,null,null);
-
     }
 
     @Override
@@ -333,20 +296,34 @@ public class AddRemainderActivity extends AppCompatActivity  implements
         mTimeText.setText(mTime);
     }
 
-    public void selectFab1(View v) {
-        mFAB1 = findViewById(R.id.starred1);
-        mFAB1.setVisibility(View.GONE);
-        mFAB2 = findViewById(R.id.starred2);
-        mFAB2.setVisibility(View.VISIBLE);
-        mActive = "true";
+    public void setDate(View view) {
+
+        Calendar now = Calendar.getInstance();
+        com.wdullaer.materialdatetimepicker.date.DatePickerDialog datePickerDialog = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.
+                newInstance(
+                        this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH));
+
+
+        datePickerDialog.show(getFragmentManager(), "DatePickerDialog");
     }
 
-    public void selectFab2(View v) {
-        mFAB2 = findViewById(R.id.starred2);
-        mFAB2.setVisibility(View.GONE);
-        mFAB1 = findViewById(R.id.starred1);
-        mFAB1.setVisibility(View.VISIBLE);
-        mActive = "false";
+    public void setTime(View view) {
+
+        Calendar now = Calendar.getInstance();
+        com.wdullaer.materialdatetimepicker.time.TimePickerDialog timePickerDialog =
+                com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(
+                        this,
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE), false);
+
+        timePickerDialog.setThemeDark(false);
+        timePickerDialog.show(getFragmentManager(), "TimePickerDialog");
+    }
+
+    public void setRepeat(View view) {
     }
 
     public void onSwitchRepeat(View view) {
@@ -360,34 +337,7 @@ public class AddRemainderActivity extends AppCompatActivity  implements
         }
     }
 
-    public void setTypeRepetitions(View view) {
-        final String[] items = new String[5];
-
-        items[0] = "Minute";
-        items[1] = "Hour";
-        items[2] = "Day";
-        items[3] = "Week";
-        items[4] = "Month";
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Type");
-
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                mRepeatType = items[item];
-                mRepeatTypeText.setText(mRepeatType);
-                mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
-    }
-
     public void setRepeatInterval(View view) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter Number");
 
@@ -417,8 +367,48 @@ public class AddRemainderActivity extends AppCompatActivity  implements
         });
 
         builder.show();
+    }
 
+    public void setTypeRepetitions(View view) {
+        final String[] items = new String[5];
 
+        items[0] = "Minute";
+        items[1] = "Hour";
+        items[2] = "Day";
+        items[3] = "Week";
+        items[4] = "Month";
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Type");
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                mRepeatType = items[item];
+                mRepeatTypeText.setText(mRepeatType);
+                mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+
+    public void selectFab1(View view) {
+        mFAB1 = findViewById(R.id.starred1);
+        mFAB1.setVisibility(View.GONE);
+        mFAB2 = findViewById(R.id.starred2);
+        mFAB2.setVisibility(View.VISIBLE);
+        mActive = "true";
+    }
+
+    public void selectFab2(View view) {
+        mFAB2 = findViewById(R.id.starred2);
+        mFAB2.setVisibility(View.GONE);
+        mFAB1 = findViewById(R.id.starred1);
+        mFAB1.setVisibility(View.VISIBLE);
+        mActive = "false";
     }
 
     @Override
@@ -458,14 +448,14 @@ public class AddRemainderActivity extends AppCompatActivity  implements
 
             case android.R.id.home:
                 if(mVehicleHasChanged){
-                    NavUtils.navigateUpFromSameTask(AddRemainderActivity.this);
+                    NavUtils.navigateUpFromSameTask(AlarmRemainderActivity.this);
                     return true;
                 }
 
                 DialogInterface.OnClickListener discardButtonClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        NavUtils.navigateUpFromSameTask(AddRemainderActivity.this);
+                        NavUtils.navigateUpFromSameTask(AlarmRemainderActivity.this);
                     }
                 };
 
@@ -610,6 +600,4 @@ public class AddRemainderActivity extends AppCompatActivity  implements
     public void onBackPressed() {
         super.onBackPressed();
     }
-
-
 }

@@ -8,10 +8,20 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:gravity="center"
+        android:id="@+id/remainder_text"
+        android:textStyle="bold"
+        android:layout_below="@+id/toolbar"
+        android:text="CLCK ON REMAINDER TITLE TO SET ALARM"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/remainder_text"
         android:id="@+id/list">
 
     </ListView>
@@ -28,6 +38,7 @@
             android:layout_centerInParent="true"
             android:padding="16dp"
             android:gravity="center"
+            android:textStyle="bold"
             android:id="@+id/no_remainder_text"
             android:text="click on the button below
              to the begin creating your remainder"/>

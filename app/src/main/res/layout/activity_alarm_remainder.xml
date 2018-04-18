@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".AlarmRemainderActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.Toolbar
@@ -323,12 +325,13 @@
 
     </ScrollView>
 
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@id/add_remainder_layout_top">
 
-    </view>
+    </View>
+
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
@@ -352,7 +355,7 @@
         android:clickable="true"
         android:onClick="selectFab2"
         android:id="@+id/starred2"
-        app:fab_icon="@drawable/ic_notifications_off_black_24px"
+        app:fab_icon="@drawable/ic_notifications_black_24px"
         app:fab_colorNormal="@color/colorAccent"
         app:fab_colorPressed="@color/colorPrimary"
         app:fab_size="normal"
@@ -360,5 +363,7 @@
         android:layout_marginTop="140dp"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="8dp"/>
+
+
 
 </RelativeLayout>
