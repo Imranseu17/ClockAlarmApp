@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements
     AlarmCursorAdapter alarmCursorAdapter;
     AlarmRemainderDBHelper alarmRemainderDBHelper = new AlarmRemainderDBHelper(this);
     ListView remainderListView;
-    ProgressDialog progressDialog;
     TextView remaindertext;
     private String alarmTitle = "";
     private static final  int   VEHICLE_LOADER = 0;

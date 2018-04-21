@@ -25,6 +25,7 @@ public class RemainderAlarmService extends IntentService {
    public  static  PendingIntent getReminderPendingIntent(Context context, Uri uri){
        Intent action = new Intent (context,RemainderAlarmService.class);
        action.setData(uri);
+       context.startService(action);
        return PendingIntent.getService(context,0, action,PendingIntent.FLAG_UPDATE_CURRENT);
    }
 
@@ -34,25 +35,27 @@ public class RemainderAlarmService extends IntentService {
 
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
+    protected void onHandleIntent(Intent intent) {
         NotificationManager manager  = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        Uri uri = intent.getData();
-        Intent action  = new Intent(this,AlarmRemainderActivity.class);
-        action.setData(uri);
-        PendingIntent operation  = TaskStackBuilder.create(this)
-                .addNextIntentWithParentStack(action)
-                .getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Cursor cursor = getContentResolver().query(uri, null,null,null,
-                null);
-        String description = "";
         try {
-            if (cursor != null && cursor.moveToFirst()) {
-                description = AlarmRemainderContract.getColumnString(cursor,
-                        AlarmRemainderContract.AlarmRemainderEntry.KEY_TITLE);
+            Uri uri = intent.getData();
+            Intent action  = new Intent(this,AlarmRemainderActivity.class);
+            action.setData(uri);
+            PendingIntent operation  = TaskStackBuilder.create(RemainderAlarmService.this)
+                    .addNextIntentWithParentStack(action)
+                    .getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
-            }
-        } finally {
+            Cursor cursor = getContentResolver().query(uri, null,null,null,
+                    null);
+
+            String description = "";
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    description = AlarmRemainderContract.getColumnString(cursor,
+                            AlarmRemainderContract.AlarmRemainderEntry.KEY_TITLE);
+
+                }
+            } finally {
                 if(cursor != null){
                     cursor.close();
                 }
@@ -63,11 +66,15 @@ public class RemainderAlarmService extends IntentService {
                     .setSmallIcon(R.drawable.ic_add_alert_white_24px)
                     .setContentIntent(operation)
                     .setVibrate(new long[]{1000,1000,1000,1000})
-                    .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                    .setSound(Settings.System.DEFAULT_ALARM_ALERT_URI)
                     .setAutoCancel(true)
                     .build();
 
             manager.notify(NOTIFICATION_ID, note);
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        }
+
     }
 

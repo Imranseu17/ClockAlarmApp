@@ -36,9 +36,9 @@ public class AlarmCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor data) {
             mTitletext = view.findViewById(R.id.recycleTitle);
             mDateAndTimeText = view.findViewById(R.id.recycle_date_time);
-            mTitletext = view.findViewById(R.id.recycle_repeat_info);
             mActiveImage = view.findViewById(R.id.activate_image);
             mThumbnailImage = view.findViewById(R.id.thumbnail_image);
+            mRepeatInfoText = view.findViewById(R.id.recycle_repeat_info);
 
         int titleColumnIndex = data.getColumnIndex(AlarmRemainderContract.AlarmRemainderEntry.KEY_TITLE);
         int dateColumnIndex = data.getColumnIndex(AlarmRemainderContract.AlarmRemainderEntry.KEY_DATE);

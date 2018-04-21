@@ -17,7 +17,6 @@
         android:id="@+id/remainder_text"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_below="@+id/toolbar"
         android:text="CLCK ON REMAINDER TITLE TO SET ALARM"/>
 
     <ListView
